@@ -26,12 +26,12 @@ public class PaymentController {
 	private final String API_VERSION = "/v1";
 	
 	@GetMapping(API_VERSION + "/payments")
-    public List<Payment> getAllUsers() {
+    public List<Payment> getAllPayments() {
 		return (List<Payment>) paymentRepository.findAll();
     }
 	
 	@GetMapping(API_VERSION + "/payments/{id}")
-    public Payment getUser(@PathVariable Long id, HttpServletResponse response) {
+    public Payment getPayment(@PathVariable Long id, HttpServletResponse response) {
 		Optional<Payment> payment = paymentRepository.findById(id);
 		
 		if (payment.isPresent()) {
@@ -43,14 +43,14 @@ public class PaymentController {
     }
 	
 	@PostMapping(API_VERSION + "/payments")
-    public Payment addUser(@RequestBody Payment newPayment, HttpServletResponse response) {
+    public Payment addPayment(@RequestBody Payment newPayment, HttpServletResponse response) {
 		Payment payment = paymentRepository.save(newPayment);
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		return payment;
     }
 	
 	@PutMapping(API_VERSION + "/payments/{id}")
-    public Payment updateUser(@PathVariable Long id, @RequestBody Payment newPayment, HttpServletResponse response) {
+    public Payment updatePayment(@PathVariable Long id, @RequestBody Payment newPayment, HttpServletResponse response) {
 		if (!paymentRepository.existsById(id)) {
 			response.setStatus(HttpServletResponse.SC_CREATED);
 		}
@@ -58,7 +58,7 @@ public class PaymentController {
     }
 	
 	@DeleteMapping(API_VERSION + "/payments/{id}")
-    public void deleteUser(@PathVariable Long id, HttpServletResponse response) {
+    public void deletePayment(@PathVariable Long id, HttpServletResponse response) {
 		paymentRepository.deleteById(id);
     }
 }
